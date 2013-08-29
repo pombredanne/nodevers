@@ -8,7 +8,7 @@ __helpstr__ = """Usage: nodevers versions [options]
       Print all the installed versions
 
   Options:
-      -h    Print this text
+      -h/--help         Print this text
 
 """
 

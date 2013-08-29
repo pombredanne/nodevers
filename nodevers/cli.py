@@ -11,11 +11,11 @@ __helpstr__ = """nodist %s
 Usage: nodist <command> [options]
 
   Commands:
-      install     Install a Node
-      use         Make the specified Node version the default
-      versions    List all the currently installed versions
-      help        Print this
-      remove      Uninstall the specified Node version
+      install           Install a Node
+      use               Make the specified Node version the default
+      versions          List all the currently installed versions
+      help              Print this
+      remove            Uninstall the specified Node version
 
 """ % __version__
 

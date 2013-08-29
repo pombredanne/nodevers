@@ -8,7 +8,7 @@ __helpstr__ = """Usage: nodevers use <version> [options]
       Makes the specified Node version the default
 
   Options:
-      -h    Print this text
+      -h/--help         Print this text
 
 """
 

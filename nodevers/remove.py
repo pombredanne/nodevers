@@ -8,7 +8,7 @@ __helpstr__ = """Usage: nodevers remove <version> [options]
       Uninstalls the specified Node version
 
   Options:
-      -h    Print this text
+      -h/--help         Print this text
 
 """
 
