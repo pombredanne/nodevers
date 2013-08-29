@@ -56,6 +56,10 @@ Switching to a Node:
 
     $ nodevers use 0.10.17
 
+You can also pass arguments to Node's configure script during building:
+
+    $ nodevers install 0.10.17 --buildargs="--gdb"
+
 ### License
 
 nodevers is licensed under BSD (3-Clause) License.  
