@@ -26,10 +26,10 @@ def install(version, build_args):
     It also handles exceptions.
     """
     if misc.version_exists(version):
-        sys.stderr.write("Error: %s is already installed.\n")
+        sys.stderr.write("Error: %s is already installed\n")
         sys.exit(1)
     elif not misc.valid_version_string(version):
-        sys.stderr.write("Error: %s doesn't look like a valid version.\n" % version)
+        sys.stderr.write("Error: %s doesn't look like a valid version\n" % version)
         sys.exit(2)
     try:
         node = install_helper.NodeInstaller(version,
@@ -40,7 +40,7 @@ def install(version, build_args):
         node.extract_source()
         sys.stdout.write("Patching...\n")
         if len(misc.get_patches_list(version)) == 0:
-            sys.stdout.write("No patches found.\n")
+            sys.stdout.write("No patches found\n")
         else:
             node.patch()
         sys.stdout.write("Configuring...\n")
@@ -51,7 +51,7 @@ def install(version, build_args):
         node.make_install()
     except StandardError:
         err = sys.exc_info()[1]
-        sys.stderr.write("Error: %s.\n" % str(err))
+        sys.stderr.write("Error: %s\n" % str(err))
         sys.exit(2)
     finally:
         sys.stdout.write("Cleaning up...\n")
@@ -70,7 +70,7 @@ def parse(args):
             optlist, arglist = getopt.getopt(args, "h", ["help", "buildargs="])
         except getopt.error:
             err = sys.exc_info()[1]
-            sys.stderr.write("Error: %s.\n" % str(err))
+            sys.stderr.write("Error: %s\n" % str(err))
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):

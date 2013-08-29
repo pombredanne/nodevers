@@ -5,7 +5,7 @@ This is the module for the versions command.
 __helpstr__ = """Usage: nodevers versions [options]
 
   Summary:
-      Print all the installed versions.
+      Print all the installed versions
 
   Options:
       -h    Print this text

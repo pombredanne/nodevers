@@ -5,7 +5,7 @@ This is the module for the remove command.
 __helpstr__ = """Usage: nodevers remove <version> [options]
 
   Summary:
-      Uninstalls the specified Node version.
+      Uninstalls the specified Node version
 
   Options:
       -h    Print this text

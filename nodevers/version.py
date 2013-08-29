@@ -46,7 +46,7 @@ def parse(args):
             optlist, arglist = getopt.getopt(args, "h", ["help"])
         except getopt.error:
             err = sys.exc_info()[1]
-            sys.stderr.write("Error: %s.\n" % str(err))
+            sys.stderr.write("Error: %s\n" % str(err))
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):

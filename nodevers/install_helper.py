@@ -51,7 +51,7 @@ class NodeInstaller(object):
     """
     This will install Node.
     """
-    def __init__(self, version, install_path, build_args=""):
+    def __init__(self, version, install_path, build_args):
         self.version = version
         self.install_path = install_path
         self.build_args = build_args
@@ -66,7 +66,7 @@ class NodeInstaller(object):
         self.tmpdir = misc.get_tmp_dir()
         try:
             logfile_path = os.path.join(os.path.join(misc.get_nodevers_prefix(), "log"))
-            self.logfile = open(logfile_path, 'w')
+            self.logfile = open(logfile_path, "w")
         except IOError:
             self.logfile = open(os.devnull, 'w')
 
