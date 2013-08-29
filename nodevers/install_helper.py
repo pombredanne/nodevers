@@ -58,9 +58,9 @@ class NodeInstaller(object):
         try:
             urlopen(self.url)
         except HTTPError:
-            raise NoSuchVersionError("Cannot download node-v%s.tar.gz" % self.version)
+            raise NoSuchVersionError("cannot download node-v%s.tar.gz" % self.version)
         except URLError:
-            raise IOError("Make sure you are connected to the Internet")
+            raise IOError("make sure you are connected to the Internet")
         self.tmpdir = misc.get_tmp_dir()
 
     def download_source(self):
@@ -75,9 +75,9 @@ class NodeInstaller(object):
             try:
                 urlretrieve(self.url, self.package)
             except IOError:
-                raise IOError("Make sure you are connected to the Internet")
+                raise IOError("make sure you are connected to the Internet")
             except ContentTooShortError:
-                raise IOError("The download was interrupted")
+                raise IOError("the download was interrupted")
     def extract_source(self):
         """
         This method will extract the source files from
