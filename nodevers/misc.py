@@ -5,6 +5,9 @@ This modules includes all the functions that are used very frequently.
 import os
 import shutil
 import re
+import subprocess
+
+from . import installer
 
 def get_nodevers_prefix():
     """
@@ -118,3 +121,60 @@ def get_patches_list(version):
             if not os.path.isdir(full_path):
                 patches_list.append(full_path)
     return patches_list
+
+def __try_python(python_exe):
+    """
+    Check if python is OK for building Node
+    If it is, return True.
+    If it is not, return False.
+    """
+    # Node supports building only with Python 2.6 or 2.7
+    regex = "Python (2\.[67]\.\d+)"
+    try:
+        process = subprocess.Popen([python_exe, "-V"], stderr=subprocess.PIPE)
+        version = process.stderr.read()
+        if re.match(regex, version) is None:
+            return False
+        else:
+            return True
+    except OSError:
+        return False
+
+def __try_make(make_exe):
+    """
+    Check if make is GNU make.
+    If it is, return True.
+    Otherwise return False.
+    """
+    regex = "GNU [Mm]ake"
+    try:
+        process = subprocess.Popen([make_exe, "-v"], stdout=subprocess.PIPE)
+        version = process.stdout.read()
+        if re.match(regex, version) is None:
+            return False
+        else:
+            return True
+    except OSError:
+        return False
+
+def python():
+    """
+    Return the python executable that will be used to execute configure.
+    """
+    if __try_python("python"):
+        return "python"
+    elif __try_python("python2"):
+        return "python2"
+    else:
+        raise installer.MissingToolError("python is either missing, newer than 2.x or older than 2.6")
+
+def gmake():
+    """
+    Return the make executable that will be used to build Node.
+    """
+    if __try_make("make"):
+        return "make"
+    elif __try_make("gmake"):
+        return "gmake"
+    else:
+        raise installer.MissingToolError("make is either missing or not GNU make")
