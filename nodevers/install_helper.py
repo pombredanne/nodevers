@@ -50,7 +50,7 @@ class NodeInstaller(object):
     """
     This will install Node.
     """
-    def __init__(self, version, install_path, build_args=None):
+    def __init__(self, version, install_path, build_args=""):
         self.version = version
         self.install_path = install_path
         self.build_args = build_args
@@ -115,3 +115,31 @@ class NodeInstaller(object):
                 raise MissingToolError("patch is missing")
             finally:
                 patch.close()
+
+    def configure(self):
+        """
+        Configure Node.
+        """
+        exit_code = call([misc.python(), "configure",
+            "--prefix=%s" % self.install_path,
+            "%s" % self.build_args],
+            stdout=self.logfile, stderr=self.logfile)
+        if exit_code is not 0:
+            raise BuildError("configure has failed")
+    def make(self):
+        """
+        Build Node.
+        """
+        exit_code = call([misc.gmake()], stdout=self.logfile,
+                stderr=self.logfile)
+        if exit_code is not 0:
+            raise BuildError("make has failed")
+
+    def make_install(self):
+        """
+        Install Node.
+        """
+        exit_code = call([misc.gmake(), "install"],
+                stdout=self.logfile, stderr=self.logfile)
+        if exit_code is not 0:
+            raise BuildError("make install has failed")

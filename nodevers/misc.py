@@ -7,8 +7,6 @@ import shutil
 import re
 import subprocess
 
-from . import installer
-
 def get_nodevers_prefix():
     """
     Return the path where Nodes will be installed
@@ -166,7 +164,7 @@ def python():
     elif __try_python("python2"):
         return "python2"
     else:
-        raise installer.MissingToolError("python is either missing, newer than 2.x or older than 2.6")
+        raise install_helper.MissingToolError("python is either missing, newer than 2.x or older than 2.6")
 
 def gmake():
     """
@@ -177,4 +175,4 @@ def gmake():
     elif __try_make("gmake"):
         return "gmake"
     else:
-        raise installer.MissingToolError("make is either missing or not GNU make")
+        raise install_helper.MissingToolError("make is either missing or not GNU make")
