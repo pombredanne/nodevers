@@ -2,7 +2,7 @@
 This is the module for the versions command.
 """
 
-__helpstr__ = """Usage: nodevers versions [-h]
+__helpstr__ = """Usage: nodevers versions [options]
 
   Summary:
       Print all the installed versions.
@@ -14,6 +14,7 @@ __helpstr__ = """Usage: nodevers versions [-h]
 
 import os
 import sys
+import getopt
 from . import misc
 from . import cli
 
@@ -35,9 +36,13 @@ def parse(args):
     if len(args) == 0:
         for ver in get_versions_list():
             sys.stdout.write("%s\n" % ver)
-    elif "-h" in args or "--help" in args:
-        cli.help_func(__helpstr__)
     else:
-        for i in args:
-            sys.stdout.write("Unknown option: %s\n" % i)
-            cli.help_func(__helpstr__)
+        try:
+            optlist, arglist = getopt.getopt(args, "h", ["help"])
+        except getopt.error:
+            err = sys.exc_info()[1]
+            sys.stderr.write("Error: %s.\n" % str(err))
+            sys.exit(-1)
+        for option, value in optlist:
+            if option in ("-h", "--help"):
+                cli.help_func(__helpstr__)
