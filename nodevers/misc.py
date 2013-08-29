@@ -16,7 +16,7 @@ def get_nodevers_prefix():
     if nodevers_prefix is not None:
         return nodevers_prefix
     elif os.geteuid() == 0:
-        return "/opt/nodist"
+        return "/opt/nodevers"
     else:
         home_path = os.getenv("HOME")
         return os.path.join(home_path, ".nodevers")
