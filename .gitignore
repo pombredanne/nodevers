@@ -41,4 +41,4 @@ nosetests.xml
 .project
 .pydevproject
 
-README.rst
+README
