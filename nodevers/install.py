@@ -15,7 +15,7 @@ __helpstr__ = """Usage: nodevers install <version> [options]
 
   Options:
       -h/--help         Print this text
-      -b/--buildargs    These will be passed to Node's configure script
+      --buildargs       These will be passed to Node's configure script
 
 """
 
@@ -26,7 +26,7 @@ def install(version, build_args):
     It also handles exceptions.
     """
     if misc.version_exists(version):
-        sys.stderr.write("Error: %s is already installed\n")
+        sys.stderr.write("Error: %s is already installed\n" % version)
         sys.exit(1)
     elif not misc.valid_version_string(version):
         sys.stderr.write("Error: %s doesn't look like a valid version\n" % version)
@@ -64,10 +64,12 @@ def parse(args):
     """
     if len(args) == 0:
         cli.help_func(__helpstr__)
+    elif args[0] == "--help" or args[0] == "-h":
+        cli.help_func(__helpstr__)
     else:
         build_args = ""
         try:
-            optlist, arglist = getopt.getopt(args, "h", ["help", "buildargs="])
+            optlist, arglist = getopt.getopt(args[1:], "h", ["help", "buildargs="])
         except getopt.error:
             err = sys.exc_info()[1]
             sys.stderr.write("Error: %s\n" % str(err))
