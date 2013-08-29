@@ -48,13 +48,13 @@ def mknodevers_prefix(path):
         full_path = os.path.join(path, i)
         os.makedirs(full_path)
 
-def valid_version_string(version):
+def valid_version_string(ver):
     """
     Use regex to see if version
     looks valid.
     """
     regex = "^(\d+)\.(\d+)\.(\d+)$"
-    match = re.match(regex, version)
+    match = re.match(regex, ver)
     if match is None:
         return False
     else:
@@ -86,38 +86,38 @@ def get_tmp_dir():
     """
     return os.path.join(get_nodevers_prefix(), "tmp")
 
-def get_version_dir(version):
+def get_version_dir(ver):
     """
     Return the path where version should be installed.
     """
-    return os.path.join(get_versions_dir(), version)
+    return os.path.join(get_versions_dir(), ver)
 
-def get_real_version_dir(version):
+def get_real_version_dir(ver):
     """
     Same as get_version_dir() except return None if the path doesn't exist.
     """
-    if version_exists(version):
-        return get_version_dir(version)
+    if version_exists(ver):
+        return get_version_dir(ver)
     else:
         return None
 
-def version_exists(version):
+def version_exists(ver):
     """
     Checks if version is installed.
     """
-    version_dir = get_version_dir(version)
+    version_dir = get_version_dir(ver)
     if os.path.isdir(version_dir):
         return True
     else:
         return False
 
-def get_patches_list(version):
+def get_patches_list(ver):
     """
     Return a list of patches that should be applied to the Node source code.
     """
     patches_list = []
     global_patch_dir = os.path.join(get_patches_dir(), "global")
-    version_patch_dir = os.path.join(get_patches_dir(), version)
+    version_patch_dir = os.path.join(get_patches_dir(), ver)
     for patch in os.listdir(global_patch_dir):
         full_path = os.path.join(global_patch_dir, patch)
         if not os.path.isdir(full_path):
@@ -139,8 +139,8 @@ def __try_python(python_exe):
     regex = "Python (2\.[67]\.\d+)"
     try:
         process = subprocess.Popen([python_exe, "-V"], stderr=subprocess.PIPE)
-        version = process.stderr.read()
-        if re.match(regex, version) is None:
+        ver = process.stderr.read()
+        if re.match(regex, ver) is None:
             return False
         else:
             return True
@@ -156,8 +156,8 @@ def __try_make(make_exe):
     regex = "GNU [Mm]ake"
     try:
         process = subprocess.Popen([make_exe, "-v"], stdout=subprocess.PIPE)
-        version = process.stdout.read()
-        if re.match(regex, version) is None:
+        ver = process.stdout.read()
+        if re.match(regex, ver) is None:
             return False
         else:
             return True

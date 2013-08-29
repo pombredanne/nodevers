@@ -51,16 +51,16 @@ class NodeInstaller(object):
     """
     This will install Node.
     """
-    def __init__(self, version, install_path, build_args):
-        self.version = version
+    def __init__(self, ver, install_path, build_args):
+        self.ver = ver
         self.install_path = install_path
         self.build_args = build_args
-        self.url = "http://nodejs.org/dist/v%s/node-v%s.tar.gz" % (self.version,
-                self.version)
+        self.url = "http://nodejs.org/dist/v%s/node-v%s.tar.gz" % (self.ver,
+                self.ver)
         try:
             urlopen(self.url)
         except HTTPError:
-            raise NoSuchVersionError("cannot download node-v%s.tar.gz" % self.version)
+            raise NoSuchVersionError("cannot download node-v%s.tar.gz" % self.ver)
         except URLError:
             raise IOError("make sure you are connected to the Internet")
         self.tmpdir = misc.get_tmp_dir()
@@ -75,7 +75,7 @@ class NodeInstaller(object):
         This will download the source packages.
         """
         os.chdir(self.tmpdir)
-        self.package = "node-v%s.tar.gz" % self.version
+        self.package = "node-v%s.tar.gz" % self.ver
         if os.path.exists(self.package):
             pass
         else:
@@ -98,13 +98,13 @@ class NodeInstaller(object):
             raise IOError("%s is corrupted" % self.package)
         extract.extractall()
         extract.close()
-        os.chdir("node-v%s" % self.version)
+        os.chdir("node-v%s" % self.ver)
 
     def patch(self):
         """
         Try to apply patches returned by misc.get_patches_list.
         """
-        patches_list = misc.get_patches_list(self.version)
+        patches_list = misc.get_patches_list(self.ver)
         for patch_path in patches_list:
             patch = open(patch_path, 'r')
             try:
@@ -151,7 +151,7 @@ class NodeInstaller(object):
         close the log file.
         """
         try:
-            clean_path = os.path.join(self.tmpdir, "node-v%s" % self.version)
+            clean_path = os.path.join(self.tmpdir, "node-v%s" % self.ver)
             shutil.rmtree(clean_path)
             self.logfile.close()
         except OSError:

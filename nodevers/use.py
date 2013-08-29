@@ -18,17 +18,17 @@ import getopt
 from . import cli
 from . import misc
 
-def link_to(version):
+def link_to(ver):
     """
     Create a symlink to the specified Node's
     bin dir in nodevers prefix.
     """
-    if version == "system":
+    if ver == "system":
         os.unlink(misc.get_bin_dir())
     else:
         if os.path.lexists(misc.get_bin_dir()):
             os.unlink(misc.get_bin_dir())
-        version_bin_dir = os.path.join(misc.get_version_dir(version),
+        version_bin_dir = os.path.join(misc.get_version_dir(ver),
                 "bin")
         os.symlink(version_bin_dir, misc.get_bin_dir())
 

@@ -27,8 +27,8 @@ def current_version():
     node_output = process.stdout.read()
     regex = "v(\d+\.\d+\.\d+)"
     match = re.match(regex, node_output)
-    version = match.group(1)
-    return version
+    ver = match.group(1)
+    return ver
 
 def parse(args):
     """
@@ -37,8 +37,8 @@ def parse(args):
     """
     if len(args) == 0:
         try:
-            version = current_version()
-            sys.stdout.write("%s\n" % version)
+            ver = current_version()
+            sys.stdout.write("%s\n" % ver)
         except OSError:
             sys.stderr.write("There is no currently active Node.\n")
     else:

@@ -19,27 +19,27 @@ __helpstr__ = """Usage: nodevers install <version> [options]
 
 """
 
-def install(version, build_args):
+def install(ver, build_args):
     """
     This calls the correct functions in the correct
     order to install Node.
     It also handles exceptions.
     """
-    if misc.version_exists(version):
-        sys.stderr.write("Error: %s is already installed\n" % version)
+    if misc.version_exists(ver):
+        sys.stderr.write("Error: %s is already installed\n" % ver)
         sys.exit(1)
-    elif not misc.valid_version_string(version):
-        sys.stderr.write("Error: %s doesn't look like a valid version\n" % version)
+    elif not misc.valid_version_string(ver):
+        sys.stderr.write("Error: %s doesn't look like a valid version\n" % ver)
         sys.exit(2)
     try:
-        node = install_helper.NodeInstaller(version,
-                misc.get_version_dir(version), build_args)
+        node = install_helper.NodeInstaller(ver,
+                misc.get_version_dir(ver), build_args)
         sys.stdout.write("Downloading...\n")
         node.download_source()
         sys.stdout.write("Extracting...\n")
         node.extract_source()
         sys.stdout.write("Patching...\n")
-        if len(misc.get_patches_list(version)) == 0:
+        if len(misc.get_patches_list(ver)) == 0:
             sys.stdout.write("No patches found\n")
         else:
             node.patch()
