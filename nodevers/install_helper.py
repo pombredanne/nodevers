@@ -8,6 +8,7 @@ The install module will handle these.
 import os
 import sys
 import tarfile
+import shutil
 from subprocess import call
 
 from . import misc
@@ -143,3 +144,14 @@ class NodeInstaller(object):
                 stdout=self.logfile, stderr=self.logfile)
         if exit_code is not 0:
             raise BuildError("make install has failed")
+
+    def cleanup(self):
+        """
+        Remove the build tree &
+        close the log file.
+        """
+        try:
+            shutil.rmtree('.')
+            self.logfile.close()
+        except IOError:
+            pass
