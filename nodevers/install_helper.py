@@ -5,7 +5,9 @@ and instead raise exceptions.
 The install module will handle these.
 """
 
+import os
 import sys
+import tarfile
 
 from . import misc
 
@@ -60,3 +62,14 @@ class NodeInstaller(object):
         except URLError:
             raise OSError("Make sure you are connected to the Internet")
         self.tmpdir = misc.get_tmp_dir()
+
+    def download_source(self):
+        """
+        This will download the source packages.
+        """
+        os.chdir(self.tmpdir)
+        package = "node-v%s.tar.gz" % self.version
+        if os.path.exists(package):
+            pass
+        else:
+            urlretrieve(self.url, package)
