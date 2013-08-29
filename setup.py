@@ -17,7 +17,7 @@ setup(
     url='https://github.com/keremc/nodevers',
     author='Kerem Çakırer',
     author_email='kcakirer@hotmail.com',
-    long_description=open("README").read(),
+    long_description=open("README.rst").read(),
     description='Node.js version manager',
     classifiers=[
         "Development Status :: 4 - Beta",
