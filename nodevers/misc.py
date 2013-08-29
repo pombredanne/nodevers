@@ -20,7 +20,7 @@ def get_nodevers_prefix():
         home_path = os.getenv("HOME")
         return os.path.join(home_path, ".nodevers")
 
-def valid_nodist_prefix(path):
+def valid_nodevers_prefix(path):
     """
     Check if path exists and if it has the required subdirs:
         versions/
@@ -35,7 +35,7 @@ def valid_nodist_prefix(path):
             return False
     return True
 
-def mknodist_prefix(path):
+def mknodevers_prefix(path):
     """
     Removes the path if it exists and then creates the directories
     needed by nodevers.
