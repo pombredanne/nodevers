@@ -2,8 +2,7 @@
 This is the module for the version command.
 """
 
-__helpstr__ = """
-Usage: nodevers version [-h]
+__helpstr__ = """Usage: nodevers version [-h]
 
   Summary:
       Print the currently active version
@@ -15,6 +14,8 @@ Usage: nodevers version [-h]
 
 import re
 import subprocess
+import sys
+from . import cli
 
 def current_version():
     """
@@ -27,3 +28,21 @@ def current_version():
     match = re.match(regex, node_output)
     version = match.group(1)
     return version
+
+def parse(args):
+    """
+    Parse the arguments and call the correct functions
+    based on them.
+    """
+    if len(args) == 0:
+        try:
+            version = current_version()
+            sys.stdout.write("%s\n" % version)
+        except OSError:
+            sys.stderr.write("There is no currently active Node.")
+    elif "-h" in args or "--help" in args:
+        cli.help_func(__helpstr__)
+    else:
+        for i in args:
+            sys.stdout.write("Unknown option: %s\n" % i)
+            cli.help_func(__helpstr__)
