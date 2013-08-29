@@ -84,3 +84,19 @@ def get_tmp_dir():
     and build Node.
     """
     return os.path.join(get_nodevers_prefix(), "tmp")
+
+def get_version_dir(version):
+    """
+    Return the path where version should be installed.
+    """
+    return os.path.join(get_versions_dir(), version)
+
+def get_real_version_dir(version):
+    """
+    Same as get_version_dir() except return None if the path doesn't exist.
+    """
+    version_dir = get_version_dir(version)
+    if os.path.isdir(version_dir):
+        return version_dir
+    else:
+        return None
