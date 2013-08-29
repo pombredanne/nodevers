@@ -100,3 +100,21 @@ def get_real_version_dir(version):
         return version_dir
     else:
         return None
+
+def get_patches_list(version):
+    """
+    Return a list of patches that should be applied to the Node source code.
+    """
+    patches_list = []
+    global_patch_dir = os.path.join(get_patches_dir(), "global")
+    version_patch_dir = os.path.join(get_patches_dir(), version)
+    for patch in os.listdir(global_patch_dir):
+        full_path = os.path.join(global_patch_dir, patch)
+        if not os.path.isdir(full_path):
+            patches_list.append(full_path)
+    if os.path.isdir(version_patch_dir):
+        for patch in os.listdir(version_patch_dir):
+            full_path = os.path.join(version_patch_dir, patch)
+            if not os.path.isdir(full_path):
+                patches_list.append(full_path)
+    return patches_list
