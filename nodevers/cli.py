@@ -37,25 +37,26 @@ def parse(args):
             "use", "remove")
     if len(args) == 0:
         help_func(__helpstr__)
-    elif args[0] == "help":
+    elif args[0] == "help" or args[0] == "-h" or args[0] == "--help":
         help_func(__helpstr__)
+    elif args[0] == "-v" or args[0] == "--version":
+        sys.stdout.write("nodevers %s\n" % __version__)
     elif args[0] not in known_commands:
         sys.stderr.write("Error: unrecognized command: '%s'\n" %
                 args[0])
         sys.exit(-1)
-    else:
-        if args[0] == "version":
-            from . import version
-            version.parse(args[1:])
-        elif args[0] == "versions":
-            from . import versions
-            versions.parse(args[1:])
-        elif args[0] == "install":
-            from . import install
-            install.parse(args[1:])
-        elif args[0] == "use":
-            from . import use
-            use.parse(args[1:])
-        elif args[0] == "remove":
-            from . import remove
-            remove.parse(args[1:])
+    if args[0] == "version":
+        from . import version
+        version.parse(args[1:])
+    elif args[0] == "versions":
+        from . import versions
+        versions.parse(args[1:])
+    elif args[0] == "install":
+        from . import install
+        install.parse(args[1:])
+    elif args[0] == "use":
+        from . import use
+        use.parse(args[1:])
+    elif args[0] == "remove":
+        from . import remove
+        remove.parse(args[1:])
