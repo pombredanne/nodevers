@@ -8,6 +8,7 @@ The install module will handle these.
 import os
 import sys
 import tarfile
+from subprocess import call
 
 from . import misc
 
@@ -62,6 +63,11 @@ class NodeInstaller(object):
         except URLError:
             raise IOError("make sure you are connected to the Internet")
         self.tmpdir = misc.get_tmp_dir()
+        try:
+            logfile_path = os.path.join(os.path.join(misc.get_nodevers_prefix(), "log"))
+            self.logfile = open(logfile_path, 'w')
+        except IOError:
+            self.logfile = open(os.devnull, 'w')
 
     def download_source(self):
         """
@@ -90,4 +96,22 @@ class NodeInstaller(object):
             os.remove(self.package)
             raise IOError("%s is corrupted" % self.package)
         extract.extractall()
+        extract.close()
         os.chdir("node-v%s" % self.version)
+
+    def patch(self):
+        """
+        Try to apply patches returned by misc.get_patches_list.
+        """
+        patches_list = misc.get_patches_list(self.version)
+        for patch_path in patches_list:
+            patch = open(patch_path, 'r')
+            try:
+                exit_code = call(["patch"], stdout=self.logfile,
+                        stderr=self.logfile, stdin=patch)
+                if exit_code is not 0:
+                    raise BuildError("patching has failed")
+            except OSError:
+                raise MissingToolError("patch is missing")
+            finally:
+                patch.close()
