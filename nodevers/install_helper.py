@@ -60,7 +60,7 @@ class NodeInstaller(object):
         except HTTPError:
             raise NoSuchVersionError("Cannot download node-v%s.tar.gz" % self.version)
         except URLError:
-            raise OSError("Make sure you are connected to the Internet")
+            raise IOError("Make sure you are connected to the Internet")
         self.tmpdir = misc.get_tmp_dir()
 
     def download_source(self):
@@ -68,8 +68,26 @@ class NodeInstaller(object):
         This will download the source packages.
         """
         os.chdir(self.tmpdir)
-        package = "node-v%s.tar.gz" % self.version
-        if os.path.exists(package):
+        self.package = "node-v%s.tar.gz" % self.version
+        if os.path.exists(self.package):
             pass
         else:
-            urlretrieve(self.url, package)
+            try:
+                urlretrieve(self.url, self.package)
+            except IOError:
+                raise IOError("Make sure you are connected to the Internet")
+            except ContentTooShortError:
+                raise IOError("The download was interrupted")
+    def extract_source(self):
+        """
+        This method will extract the source files from
+        download package.
+        In case it fails, it will remove the package.
+        """
+        try:
+            extract = tarfile.open(self.package, "r|gz")
+        except tarfile.ReadError:
+            os.remove(self.package)
+            raise IOError("%s is corrupted" % self.package)
+        extract.extractall()
+        os.chdir("node-v%s" % self.version)
