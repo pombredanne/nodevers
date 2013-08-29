@@ -96,11 +96,20 @@ def get_real_version_dir(version):
     """
     Same as get_version_dir() except return None if the path doesn't exist.
     """
-    version_dir = get_version_dir(version)
-    if os.path.isdir(version_dir):
-        return version_dir
+    if version_exists(version):
+        return get_version_dir(version)
     else:
         return None
+
+def version_exists(version):
+    """
+    Checks if version is installed.
+    """
+    version_dir = get_version_dir(version)
+    if os.path.isdir(version_dir):
+        return True
+    else:
+        return False
 
 def get_patches_list(version):
     """

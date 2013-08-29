@@ -151,7 +151,8 @@ class NodeInstaller(object):
         close the log file.
         """
         try:
-            shutil.rmtree('.')
+            clean_path = os.path.join(self.tmpdir, "node-v%s" % self.version)
+            shutil.rmtree(clean_path)
             self.logfile.close()
         except IOError:
             pass
