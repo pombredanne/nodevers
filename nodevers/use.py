@@ -37,11 +37,11 @@ def parse(args):
     Parse the arguments and call the correct functions
     based on them.
     """
-    if len(args) == 0:
+    if len(args) == 0 or args[0] in ("-h", "--help"):
         cli.help_func(__helpstr__)
     else:
         try:
-            optlist, arglist = getopt.getopt(args, "h", ["help"])
+            optlist, arglist = getopt.getopt(args[1:], "h", ["help"])
         except getopt.error:
             err = sys.exc_info()[1]
             sys.stderr.write("Error: %s\n" % str(err))

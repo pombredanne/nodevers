@@ -62,9 +62,7 @@ def parse(args):
     Parse the CLI options and call
     the correct functions based on them.
     """
-    if len(args) == 0:
-        cli.help_func(__helpstr__)
-    elif args[0] == "--help" or args[0] == "-h":
+    if len(args) == 0 or args[0] in ("-h", "--help"):
         cli.help_func(__helpstr__)
     else:
         build_args = ""
