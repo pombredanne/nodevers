@@ -56,3 +56,6 @@ def parse(args):
         elif args[0] == "use":
             from . import use
             use.parse(args[1:])
+        elif args[0] == "remove":
+            from . import remove
+            remove.parse(args[1:])
