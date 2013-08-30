@@ -55,7 +55,10 @@ def install(ver, build_args):
         sys.exit(2)
     finally:
         sys.stdout.write("Cleaning up...\n")
-        node.cleanup()
+        try:
+            node.cleanup()
+        except StandardError:
+            pass
 
 def parse(args):
     """
@@ -67,7 +70,8 @@ def parse(args):
     else:
         build_args = ""
         try:
-            optlist, arglist = getopt.getopt(args[1:], "h", ["help", "buildargs="])
+            optlist, arglist = getopt.getopt(args[1:], "h", ["help",
+                "buildargs="])
         except getopt.error:
             err = sys.exc_info()[1]
             sys.stderr.write("Error: %s\n" % str(err))

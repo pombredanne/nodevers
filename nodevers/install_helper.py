@@ -150,9 +150,6 @@ class NodeInstaller(object):
         Remove the build tree &
         close the log file.
         """
-        try:
-            clean_path = os.path.join(self.tmpdir, "node-v%s" % self.ver)
-            shutil.rmtree(clean_path)
-            self.logfile.close()
-        except OSError:
-            pass
+        clean_path = os.path.join(self.tmpdir, "node-v%s" % self.ver)
+        shutil.rmtree(clean_path)
+        self.logfile.close()
