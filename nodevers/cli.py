@@ -40,7 +40,7 @@ def parse(args):
     elif args[0] == "help" or args[0] == "-h" or args[0] == "--help":
         help_func(__helpstr__)
     elif args[0] == "-v" or args[0] == "--version":
-        sys.stdout.write("nodevers %s\n" % __version__)
+        sys.stdout.write("nodevers %s\n" % nodevers.__version__)
     elif args[0] not in known_commands:
         sys.stderr.write("Error: unrecognized command: '%s'\n" %
                 args[0])

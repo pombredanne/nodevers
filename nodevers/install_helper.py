@@ -26,12 +26,7 @@ else:
     from urllib2 import urlopen
     from urllib import urlretrieve
 
-class MissingToolError(StandardError):
-    """
-    Will be thrown if GNU make or
-    python (2.x) is missing.
-    """
-    pass
+
 
 class BuildError(StandardError):
     """
@@ -113,7 +108,7 @@ class NodeInstaller(object):
                 if exit_code is not 0:
                     raise BuildError("patching has failed")
             except OSError:
-                raise MissingToolError("patch is missing")
+                raise misc.MissingToolError("patch is missing")
             finally:
                 patch.close()
 
