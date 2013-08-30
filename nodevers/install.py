@@ -4,9 +4,9 @@ This is the module for the install command.
 
 import getopt
 import sys
-from . import install_helper
-from . import misc
-from . import cli
+import nodevers.install_helper as install_helper
+import nodevers.misc as misc
+import nodevers.cli as cli
 
 __helpstr__ = """Usage: nodevers install <version> [options]
 

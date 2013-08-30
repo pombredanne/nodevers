@@ -5,7 +5,7 @@ parse() function.
 """
 
 import sys
-from . import __version__
+import nodevers
 
 __helpstr__ = """nodist %s
 Usage: nodist <command> [options]
@@ -17,7 +17,7 @@ Usage: nodist <command> [options]
       help              Print this
       remove            Uninstall the specified Node version
 
-""" % __version__
+""" % nodevers.__version__
 
 def help_func(help_str):
     """
@@ -46,17 +46,17 @@ def parse(args):
                 args[0])
         sys.exit(-1)
     if args[0] == "version":
-        from . import version
+        import nodevers.version as version
         version.parse(args[1:])
     elif args[0] == "versions":
-        from . import versions
+        import nodevers.versions as versions
         versions.parse(args[1:])
     elif args[0] == "install":
-        from . import install
+        import nodevers.install as install
         install.parse(args[1:])
     elif args[0] == "use":
-        from . import use
+        import nodevers.use as use
         use.parse(args[1:])
     elif args[0] == "remove":
-        from . import remove
+        import nodevers.remove as remove
         remove.parse(args[1:])

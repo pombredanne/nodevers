@@ -15,8 +15,8 @@ __helpstr__ = """Usage: nodevers use <version> [options]
 import os
 import sys
 import getopt
-from . import cli
-from . import misc
+import nodevers.cli as cli
+import nodevers.misc as misc
 
 def link_to(ver):
     """

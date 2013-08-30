@@ -15,10 +15,10 @@ __helpstr__ = """Usage: nodevers remove <version> [options]
 import shutil
 import sys
 import getopt
-from . import cli
-from . import misc
-from . import use
-from . import version
+import nodevers.cli as cli
+import nodevers.misc as misc
+import nodevers.use as use
+import nodevers.version as version
 
 def remove(ver):
     """

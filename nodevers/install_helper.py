@@ -11,7 +11,7 @@ import tarfile
 import shutil
 from subprocess import call
 
-from . import misc
+import nodevers.misc as misc
 
 if sys.version_info >= (3, 0):
     from urllib.error import URLError

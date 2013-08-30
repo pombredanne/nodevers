@@ -15,8 +15,8 @@ __helpstr__ = """Usage: nodevers versions [options]
 import os
 import sys
 import getopt
-from . import misc
-from . import cli
+import nodevers.misc as misc
+import nodevers.cli as cli
 
 def get_versions_list():
     """

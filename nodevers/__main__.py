@@ -4,8 +4,8 @@ and then calls cli.parse().
 """
 import sys
 
-from . import misc
-from . import cli
+import nodevers.misc as misc
+import nodevers.cli as cli
 
 if not misc.valid_nodevers_prefix(misc.get_nodevers_prefix()):
     try:
