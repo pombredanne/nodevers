@@ -45,4 +45,4 @@ def parse(args):
         if shared.version_exists(args[0]):
             remove(args[0])
         else:
-            sys.stdout.write("There is no such version installed.\n")
+            sys.stdout.write("Error: there is no such version installed\n")

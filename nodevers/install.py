@@ -39,7 +39,7 @@ def install(ver, build_args):
         node.extract_source()
         sys.stdout.write("Patching...\n")
         if len(shared.get_patches_list(ver)) == 0:
-            sys.stdout.write("No patches found\n")
+            sys.stdout.write("No patches found.\n")
         else:
             node.patch()
         sys.stdout.write("Configuring...\n")
