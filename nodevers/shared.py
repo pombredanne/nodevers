@@ -217,7 +217,8 @@ def link_to(ver):
     bin dir in nodevers prefix.
     """
     if ver == "system":
-        os.unlink(get_bin_dir())
+        if os.path.lexists(get_bin_dir()):
+            os.unlink(get_bin_dir())
     elif version_exists(ver):
         if os.path.lexists(get_bin_dir()):
             os.unlink(get_bin_dir())
