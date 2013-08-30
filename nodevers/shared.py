@@ -16,6 +16,13 @@ class MissingToolError(StandardError):
     """
     pass
 
+class NoSuchVersionError(StandardError):
+    """
+    Will be thrown if shared.valid_version_string() returns
+    False.
+    """
+    pass
+
 def get_nodevers_prefix():
     """
     Return the path where Nodes will be installed
@@ -203,3 +210,31 @@ def help_func(help_str):
     # More Python 2.5/3.x portable than print.
     sys.stdout.write(help_str)
     sys.exit(0)
+
+def link_to(ver):
+    """
+    Create a symlink to the specified Node's
+    bin dir in nodevers prefix.
+    """
+    if ver == "system":
+        os.unlink(get_bin_dir())
+    elif version_exists(ver):
+        if os.path.lexists(get_bin_dir()):
+            os.unlink(get_bin_dir())
+        version_bin_dir = os.path.join(get_version_dir(ver),
+                "bin")
+        os.symlink(version_bin_dir, get_bin_dir())
+    else:
+        raise NoSuchVersionError("there is no such version installed")
+
+def current_version():
+    """
+    Try to get the current version.
+    """
+    # We'll let parse() handle the exceptions.
+    process = subprocess.Popen(["node", "-v"], stdout=subprocess.PIPE)
+    node_output = process.stdout.read()
+    regex = "v(\d+\.\d+\.\d+)"
+    match = re.match(regex, node_output)
+    ver = match.group(1)
+    return ver

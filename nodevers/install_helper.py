@@ -35,12 +35,6 @@ class BuildError(StandardError):
     """
     pass
 
-class NoSuchVersionError(StandardError):
-    """
-    Will be thrown if shared.valid_version_string() returns
-    False.
-    """
-    pass
 
 class NodeInstaller(object):
     """
@@ -55,7 +49,7 @@ class NodeInstaller(object):
         try:
             urlopen(self.url)
         except HTTPError:
-            raise NoSuchVersionError("cannot download node-v%s.tar.gz" % self.ver)
+            raise shared.NoSuchVersionError("cannot download node-v%s.tar.gz" % self.ver)
         except URLError:
             raise IOError("make sure you are connected to the Internet")
         self.tmpdir = shared.get_tmp_dir()

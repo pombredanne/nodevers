@@ -18,17 +18,6 @@ import sys
 import getopt
 import nodevers.shared as shared
 
-def current_version():
-    """
-    Try to get the current version.
-    """
-    # We'll let parse() handle the exceptions.
-    process = subprocess.Popen(["node", "-v"], stdout=subprocess.PIPE)
-    node_output = process.stdout.read()
-    regex = "v(\d+\.\d+\.\d+)"
-    match = re.match(regex, node_output)
-    ver = match.group(1)
-    return ver
 
 def parse(args):
     """
@@ -37,7 +26,7 @@ def parse(args):
     """
     if len(args) == 0:
         try:
-            ver = current_version()
+            ver = shared.current_version()
             sys.stdout.write("%s\n" % ver)
         except OSError:
             sys.stderr.write("There is no currently active Node.\n")

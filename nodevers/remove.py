@@ -16,15 +16,13 @@ import shutil
 import sys
 import getopt
 import nodevers.shared as shared
-import nodevers.use as use
-import nodevers.version as version
 
 def remove(ver):
     """
     Uninstalls the specified version.
     """
-    if ver == version.current_version():
-        use.link_to("system")
+    if ver == shared.current_version():
+        shared.link_to("system")
     shutil.rmtree(shared.get_version_dir(ver))
 
 def parse(args):
