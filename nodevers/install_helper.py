@@ -11,7 +11,7 @@ import tarfile
 import shutil
 from subprocess import call
 
-import nodevers.misc as misc
+import nodevers.shared as shared
 
 if sys.version_info >= (3, 0):
     from urllib.error import URLError
@@ -37,7 +37,7 @@ class BuildError(StandardError):
 
 class NoSuchVersionError(StandardError):
     """
-    Will be thrown if misc.valid_version_string() returns
+    Will be thrown if shared.valid_version_string() returns
     False.
     """
     pass
@@ -58,9 +58,9 @@ class NodeInstaller(object):
             raise NoSuchVersionError("cannot download node-v%s.tar.gz" % self.ver)
         except URLError:
             raise IOError("make sure you are connected to the Internet")
-        self.tmpdir = misc.get_tmp_dir()
+        self.tmpdir = shared.get_tmp_dir()
         try:
-            logfile_path = os.path.join(os.path.join(misc.get_nodevers_prefix(), "log"))
+            logfile_path = os.path.join(os.path.join(shared.get_nodevers_prefix(), "log"))
             self.logfile = open(logfile_path, "w")
         except IOError:
             self.logfile = open(os.devnull, 'w')
@@ -97,9 +97,9 @@ class NodeInstaller(object):
 
     def patch(self):
         """
-        Try to apply patches returned by misc.get_patches_list.
+        Try to apply patches returned by shared.get_patches_list.
         """
-        patches_list = misc.get_patches_list(self.ver)
+        patches_list = shared.get_patches_list(self.ver)
         for patch_path in patches_list:
             patch = open(patch_path, 'r')
             try:
@@ -108,7 +108,7 @@ class NodeInstaller(object):
                 if exit_code is not 0:
                     raise BuildError("patching has failed")
             except OSError:
-                raise misc.MissingToolError("patch is missing")
+                raise shared.MissingToolError("patch is missing")
             finally:
                 patch.close()
 
@@ -116,7 +116,7 @@ class NodeInstaller(object):
         """
         Configure Node.
         """
-        exit_code = call([misc.python(), "configure",
+        exit_code = call([shared.python(), "configure",
             "--prefix=%s" % self.install_path,
             "%s" % self.build_args],
             stdout=self.logfile, stderr=self.logfile)
@@ -126,7 +126,7 @@ class NodeInstaller(object):
         """
         Build Node.
         """
-        exit_code = call([misc.gmake()], stdout=self.logfile,
+        exit_code = call([shared.gmake()], stdout=self.logfile,
                 stderr=self.logfile)
         if exit_code is not 0:
             raise BuildError("make has failed")
@@ -135,7 +135,7 @@ class NodeInstaller(object):
         """
         Install Node.
         """
-        exit_code = call([misc.gmake(), "install"],
+        exit_code = call([shared.gmake(), "install"],
                 stdout=self.logfile, stderr=self.logfile)
         if exit_code is not 0:
             raise BuildError("make install has failed")

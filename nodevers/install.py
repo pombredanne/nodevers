@@ -5,7 +5,7 @@ This is the module for the install command.
 import getopt
 import sys
 import nodevers.install_helper as install_helper
-import nodevers.misc as misc
+import nodevers.shared as shared
 import nodevers.cli as cli
 
 __helpstr__ = """Usage: nodevers install <version> [options]
@@ -25,21 +25,21 @@ def install(ver, build_args):
     order to install Node.
     It also handles exceptions.
     """
-    if misc.version_exists(ver):
+    if shared.version_exists(ver):
         sys.stderr.write("Error: %s is already installed\n" % ver)
         sys.exit(1)
-    elif not misc.valid_version_string(ver):
+    elif not shared.valid_version_string(ver):
         sys.stderr.write("Error: %s doesn't look like a valid version\n" % ver)
         sys.exit(2)
     try:
         node = install_helper.NodeInstaller(ver,
-                misc.get_version_dir(ver), build_args)
+                shared.get_version_dir(ver), build_args)
         sys.stdout.write("Downloading...\n")
         node.download_source()
         sys.stdout.write("Extracting...\n")
         node.extract_source()
         sys.stdout.write("Patching...\n")
-        if len(misc.get_patches_list(ver)) == 0:
+        if len(shared.get_patches_list(ver)) == 0:
             sys.stdout.write("No patches found\n")
         else:
             node.patch()

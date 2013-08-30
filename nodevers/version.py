@@ -16,7 +16,7 @@ import re
 import subprocess
 import sys
 import getopt
-from . import cli
+import nodevers.cli as cli
 
 def current_version():
     """

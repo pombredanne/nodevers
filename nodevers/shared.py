@@ -1,5 +1,6 @@
 """
-This modules includes all the functions that are used very frequently.
+This modules includes all the functions that are used very frequently
+and used by multiple modules.
 """
 
 import os

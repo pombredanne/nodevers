@@ -16,7 +16,7 @@ import shutil
 import sys
 import getopt
 import nodevers.cli as cli
-import nodevers.misc as misc
+import nodevers.shared as shared
 import nodevers.use as use
 import nodevers.version as version
 
@@ -26,7 +26,7 @@ def remove(ver):
     """
     if ver == version.current_version():
         use.link_to("system")
-    shutil.rmtree(misc.get_version_dir(ver))
+    shutil.rmtree(shared.get_version_dir(ver))
 
 def parse(args):
     """
@@ -45,7 +45,7 @@ def parse(args):
         for option, value in optlist:
             if option in ("-h", "--help"):
                 cli.help_func(__helpstr__)
-        if misc.version_exists(args[0]):
+        if shared.version_exists(args[0]):
             remove(args[0])
         else:
             sys.stdout.write("There is no such version installed.\n")

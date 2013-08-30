@@ -4,12 +4,12 @@ and then calls cli.parse().
 """
 import sys
 
-import nodevers.misc as misc
+import nodevers.shared as shared
 import nodevers.cli as cli
 
-if not misc.valid_nodevers_prefix(misc.get_nodevers_prefix()):
+if not shared.valid_nodevers_prefix(shared.get_nodevers_prefix()):
     try:
-        misc.mknodevers_prefix(misc.get_nodevers_prefix())
+        shared.mknodevers_prefix(shared.get_nodevers_prefix())
     except IOError:
         sys.stderr.write("Error: failed to create the nodevers directory")
         sys.exit(3)
