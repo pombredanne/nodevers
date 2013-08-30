@@ -4,6 +4,7 @@ and used by multiple modules.
 """
 
 import os
+import sys
 import shutil
 import re
 import subprocess
@@ -193,3 +194,12 @@ def gmake():
         return "gmake"
     else:
         raise MissingToolError("make is either missing or not GNU make")
+
+def help_func(help_str):
+    """
+    Prints help_str and then
+    exits.
+    """
+    # More Python 2.5/3.x portable than print.
+    sys.stdout.write(help_str)
+    sys.exit(0)

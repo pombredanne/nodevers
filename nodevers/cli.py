@@ -6,6 +6,7 @@ parse() function.
 
 import sys
 import nodevers
+import nodevers.shared as shared
 
 __helpstr__ = """nodist %s
 Usage: nodist <command> [options]
@@ -19,14 +20,6 @@ Usage: nodist <command> [options]
 
 """ % nodevers.__version__
 
-def help_func(help_str):
-    """
-    Prints help_str and then
-    exits.
-    """
-    # More Python 2.5/3.x portable than print.
-    sys.stdout.write(help_str)
-    sys.exit(0)
 
 def parse(args):
     """
@@ -36,9 +29,9 @@ def parse(args):
     known_commands = ("version", "versions", "install", "help",
             "use", "remove")
     if len(args) == 0:
-        help_func(__helpstr__)
+        shared.help_func(__helpstr__)
     elif args[0] == "help" or args[0] == "-h" or args[0] == "--help":
-        help_func(__helpstr__)
+        shared.help_func(__helpstr__)
     elif args[0] == "-v" or args[0] == "--version":
         sys.stdout.write("nodevers %s\n" % nodevers.__version__)
     elif args[0] not in known_commands:

@@ -6,7 +6,6 @@ import getopt
 import sys
 import nodevers.install_helper as install_helper
 import nodevers.shared as shared
-import nodevers.cli as cli
 
 __helpstr__ = """Usage: nodevers install <version> [options]
 
@@ -66,7 +65,7 @@ def parse(args):
     the correct functions based on them.
     """
     if len(args) == 0 or args[0] in ("-h", "--help"):
-        cli.help_func(__helpstr__)
+        shared.help_func(__helpstr__)
     else:
         build_args = ""
         try:
@@ -78,7 +77,7 @@ def parse(args):
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):
-                cli.help_func(__helpstr__)
+                shared.help_func(__helpstr__)
             elif option in ("--buildargs"):
                 build_args = value
         install(args[0], build_args)

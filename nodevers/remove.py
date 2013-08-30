@@ -15,7 +15,6 @@ __helpstr__ = """Usage: nodevers remove <version> [options]
 import shutil
 import sys
 import getopt
-import nodevers.cli as cli
 import nodevers.shared as shared
 import nodevers.use as use
 import nodevers.version as version
@@ -34,7 +33,7 @@ def parse(args):
     based on them.
     """
     if len(args) == 0:
-        cli.help_func(__helpstr__)
+        shared.help_func(__helpstr__)
     else:
         try:
             optlist, arglist = getopt.getopt(args, "h", ["help"])
@@ -44,7 +43,7 @@ def parse(args):
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):
-                cli.help_func(__helpstr__)
+                shared.help_func(__helpstr__)
         if shared.version_exists(args[0]):
             remove(args[0])
         else:

@@ -16,7 +16,6 @@ import os
 import sys
 import getopt
 import nodevers.shared as shared
-import nodevers.cli as cli
 
 def get_versions_list():
     """
@@ -45,4 +44,4 @@ def parse(args):
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):
-                cli.help_func(__helpstr__)
+                shared.help_func(__helpstr__)

@@ -16,7 +16,7 @@ import re
 import subprocess
 import sys
 import getopt
-import nodevers.cli as cli
+import nodevers.shared as shared
 
 def current_version():
     """
@@ -50,4 +50,4 @@ def parse(args):
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):
-                cli.help_func(__helpstr__)
+                shared.help_func(__helpstr__)

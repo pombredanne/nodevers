@@ -15,7 +15,6 @@ __helpstr__ = """Usage: nodevers use <version> [options]
 import os
 import sys
 import getopt
-import nodevers.cli as cli
 import nodevers.shared as shared
 
 def link_to(ver):
@@ -38,7 +37,7 @@ def parse(args):
     based on them.
     """
     if len(args) == 0 or args[0] in ("-h", "--help"):
-        cli.help_func(__helpstr__)
+        shared.help_func(__helpstr__)
     else:
         try:
             optlist, arglist = getopt.getopt(args[1:], "h", ["help"])
@@ -48,7 +47,7 @@ def parse(args):
             sys.exit(-1)
         for option, value in optlist:
             if option in ("-h", "--help"):
-                cli.help_func(__helpstr__)
+                shared.help_func(__helpstr__)
         if shared.version_exists(args[0]) or args[0] == "system":
             link_to(args[0])
         else:
