@@ -154,7 +154,9 @@ def __try_python(python_exe):
     # Node supports building only with Python 2.6 or 2.7
     regex = "Python (2\.[67]\.\d+)"
     try:
-        process = subprocess.Popen([python_exe, "-V"], stderr=subprocess.PIPE)
+        devnull = open(os.devnull, "w")
+        process = subprocess.Popen([python_exe, "-V"], stderr=subprocess.PIPE,
+                stdout=devnull)
         ver = process.stderr.read()
         if re.match(regex, ver) is None:
             return False
@@ -162,6 +164,8 @@ def __try_python(python_exe):
             return True
     except OSError:
         return False
+    finally:
+        devnull.close()
 
 def __try_make(make_exe):
     """
@@ -171,6 +175,7 @@ def __try_make(make_exe):
     """
     regex = "GNU [Mm]ake"
     try:
+        devnull = open(os.devnull, "w")
         process = subprocess.Popen([make_exe, "-v"], stdout=subprocess.PIPE)
         ver = process.stdout.read()
         if re.match(regex, ver) is None:
@@ -179,6 +184,8 @@ def __try_make(make_exe):
             return True
     except OSError:
         return False
+    finally:
+        devnull.close()
 
 def python():
     """
