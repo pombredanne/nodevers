@@ -7,6 +7,11 @@ parse() function.
 import sys
 import nodevers
 import nodevers.shared as shared
+import nodevers.version as version
+import nodevers.versions as versions
+import nodevers.install as install
+import nodevers.use as use
+import nodevers.remove as remove
 
 __helpstr__ = """nodist %s
 Usage: nodist <command> [options]
@@ -39,17 +44,12 @@ def parse(args):
                 args[0])
         sys.exit(-1)
     if args[0] == "version":
-        import nodevers.version as version
         version.parse(args[1:])
     elif args[0] == "versions":
-        import nodevers.versions as versions
         versions.parse(args[1:])
     elif args[0] == "install":
-        import nodevers.install as install
         install.parse(args[1:])
     elif args[0] == "use":
-        import nodevers.use as use
         use.parse(args[1:])
     elif args[0] == "remove":
-        import nodevers.remove as remove
         remove.parse(args[1:])
