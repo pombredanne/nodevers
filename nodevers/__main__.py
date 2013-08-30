@@ -15,7 +15,10 @@ if not misc.valid_nodevers_prefix(misc.get_nodevers_prefix()):
         sys.exit(3)
 
 def main(argv):
-    cli.parse(argv[1:])
+    try:
+        cli.parse(argv[1:])
+    except KeyboardInterrupt:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv)
