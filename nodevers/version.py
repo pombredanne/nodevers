@@ -29,7 +29,7 @@ def parse(args):
             ver = shared.current_version()
             sys.stdout.write("%s\n" % ver)
         except OSError:
-            sys.stderr.write("There is no currently active Node.\n")
+            sys.stderr.write("Error: there is no currently active Node\n")
     else:
         try:
             optlist, arglist = getopt.getopt(args, "h", ["help"])
