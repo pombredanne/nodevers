@@ -31,23 +31,23 @@ def install(ver, build_args):
         sys.stderr.write("Error: %s doesn't look like a valid version\n" % ver)
         sys.exit(2)
     try:
-        node = install_helper.NodeInstaller(ver,
+        nodesrc = install_helper.NodeSourceInstaller(ver,
                 shared.get_version_dir(ver), build_args)
         sys.stdout.write("Downloading...\n")
-        node.download_source()
+        nodesrc.download()
         sys.stdout.write("Extracting...\n")
-        node.extract_source()
+        nodesrc.extract()
         sys.stdout.write("Patching...\n")
         if len(shared.get_patches_list(ver)) == 0:
             sys.stdout.write("No patches found.\n")
         else:
-            node.patch()
+            nodesrc.patch()
         sys.stdout.write("Configuring...\n")
-        node.configure()
+        nodesrc.configure()
         sys.stdout.write("Building...\n")
-        node.make()
+        nodesrc.make()
         sys.stdout.write("Installing...\n")
-        node.make_install()
+        nodesrc.make_install()
     except StandardError:
         err = sys.exc_info()[1]
         sys.stderr.write("Error: %s\n" % str(err))
@@ -55,7 +55,7 @@ def install(ver, build_args):
     finally:
         sys.stdout.write("Cleaning up...\n")
         try:
-            node.cleanup()
+            nodesrc.cleanup()
         except StandardError:
             pass
 

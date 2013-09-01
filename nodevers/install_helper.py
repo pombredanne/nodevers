@@ -36,7 +36,7 @@ class BuildError(StandardError):
     pass
 
 
-class NodeInstaller(object):
+class NodeSourceInstaller(object):
     """
     This will install Node.
     """
@@ -59,7 +59,7 @@ class NodeInstaller(object):
         except IOError:
             self.logfile = open(os.devnull, 'w')
 
-    def download_source(self):
+    def download(self):
         """
         This will download the source packages.
         """
@@ -74,7 +74,7 @@ class NodeInstaller(object):
                 raise IOError("make sure you are connected to the Internet")
             except ContentTooShortError:
                 raise IOError("the download was interrupted")
-    def extract_source(self):
+    def extract(self):
         """
         This method will extract the source files from
         download package.
