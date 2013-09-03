@@ -9,6 +9,15 @@ import shutil
 import re
 import subprocess
 
+if sys.version_info >= (3, 0):
+    from urllib.error import URLError
+    from urllib.error import HTTPError
+    from urllib.request import urlopen
+else:
+    from urllib2 import URLError
+    from urllib2 import HTTPError
+    from urllib2 import urlopen
+
 class MissingToolError(StandardError):
     """
     Will be thrown if GNU make or
@@ -66,15 +75,12 @@ def mknodevers_prefix(path):
 
 def valid_version_string(ver):
     """
-    Use regex to see if version
-    looks valid.
+    Uses get_remote_versions_list() to see if ver is a valid version.
     """
-    regex = "^(\d+)\.(\d+)\.(\d+)$"
-    match = re.match(regex, ver)
-    if match is None:
-        return False
-    else:
+    if ver in get_remote_versions_list():
         return True
+    else:
+        return False
 
 def get_versions_dir():
     """
@@ -152,8 +158,8 @@ def _try_python(python_exe):
     If it is not, return False.
     """
     # Node supports building only with Python 2.6 or 2.7
-    regex = "Python (2\.[67]\.\d+)"
     try:
+        regex = "Python (2\.[67]\.\d+)"
         devnull = open(os.devnull, "w")
         process = subprocess.Popen([python_exe, "-V"], stderr=subprocess.PIPE,
                 stdout=devnull)
@@ -173,8 +179,8 @@ def _try_make(make_exe):
     If it is, return True.
     Otherwise return False.
     """
-    regex = "GNU [Mm]ake"
     try:
+        regex = "GNU [Mm]ake"
         devnull = open(os.devnull, "w")
         process = subprocess.Popen([make_exe, "-v"], stdout=subprocess.PIPE)
         ver = process.stdout.read()
@@ -244,3 +250,28 @@ def current_version():
     match = re.match(regex, node_output)
     ver = match.group(1)
     return ver
+
+def get_remote_versions_list():
+    """
+    Try to get a list of all the installable Node versions.
+    """
+    try:
+        remote_versions = []
+        req = urlopen("http://nodejs.org/dist/")
+        data = req.read()
+        temp_list = re.findall("\d+\.\d+\.\d+", data)
+        for t in temp_list:
+            if t in remote_versions:
+                pass
+            elif re.match("0\.[0-4]\.\d+", t):
+                pass
+            elif t == "0.5.0":
+                pass
+            else:
+                remote_versions.append(t)
+        return remote_versions
+    except HTTPError:
+        raise HTTPError("cannot download the remote versions list")
+    except URLError:
+        raise URLError("cannot download the remote versions list")
+

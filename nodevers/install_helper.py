@@ -26,15 +26,12 @@ else:
     from urllib2 import urlopen
     from urllib import urlretrieve
 
-
-
 class BuildError(StandardError):
     """
     Will be thrown when ./configure, make
     or make install fails.
     """
     pass
-
 
 class NodeSourceInstaller(object):
     """
