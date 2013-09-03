@@ -15,6 +15,7 @@ __helpstr__ = """Usage: nodevers install <version> [options]
   Options:
       -h/--help         Print this text
       --buildargs       These will be passed to Node's configure script
+      -l/--list         Display all installable versions
 
 """
 
@@ -63,6 +64,14 @@ def parse(args):
     """
     if len(args) == 0 or args[0] in ("-h", "--help"):
         shared.help_func(__helpstr__)
+    elif args[0] in ("-l", "--list"):
+        try:
+            for v in shared.get_remote_versions_list():
+                sys.stdout.write("%s\n" % v)
+        except StandardError:
+            err = sys.exc_info()[1]
+            sys.stderr.write("Error: %s\n" % str(err))
+            sys.exit(2)
     else:
         build_args = ""
         try:
