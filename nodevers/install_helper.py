@@ -9,6 +9,7 @@ import os
 import sys
 import tarfile
 import shutil
+import re
 from subprocess import call
 
 import nodevers.shared as shared
@@ -103,10 +104,15 @@ class NodeSourceInstaller(object):
         """
         Configure Node.
         """
-        exit_code = call([shared.python(), "configure",
-            "--prefix=%s" % self.install_path,
-            "%s" % self.build_args],
-            stdout=self.logfile, stderr=self.logfile)
+        if re.match("0\.[0-6]\.\d+", self.ver):
+            exit_code = call(["./configure", "--prefix=%s" % self.install_path,
+                    "%s" % self.build_args],
+                    stdout=self.logfile, stderr=self.logfile)
+        else:
+            exit_code = call([shared.python(), "configure",
+                "--prefix=%s" % self.install_path,
+                "%s" % self.build_args],
+                stdout=self.logfile, stderr=self.logfile)
         if exit_code is not 0:
             raise BuildError("configure has failed")
     def make(self):
