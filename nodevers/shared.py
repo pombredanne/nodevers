@@ -145,7 +145,7 @@ def get_patches_list(ver):
                 patches_list.append(full_path)
     return patches_list
 
-def __try_python(python_exe):
+def _try_python(python_exe):
     """
     Check if python is OK for building Node
     If it is, return True.
@@ -167,7 +167,7 @@ def __try_python(python_exe):
     finally:
         devnull.close()
 
-def __try_make(make_exe):
+def _try_make(make_exe):
     """
     Check if make is GNU make.
     If it is, return True.
@@ -191,23 +191,21 @@ def python():
     """
     Return the python executable that will be used to execute configure.
     """
-    if __try_python("python"):
-        return "python"
-    elif __try_python("python2"):
-        return "python2"
-    else:
-        raise MissingToolError("python is either missing, newer than 2.x or older than 2.6")
+    pythons = ["python", "python2"]
+    for p in pythons:
+        if _try_python(p):
+            return p
+    raise MissingToolError("python is either missing, newer than 2.x or older than 2.6")
 
 def gmake():
     """
     Return the make executable that will be used to build Node.
     """
-    if __try_make("make"):
-        return "make"
-    elif __try_make("gmake"):
-        return "gmake"
-    else:
-        raise MissingToolError("make is either missing or not GNU make")
+    makes = ["make", "gmake"]
+    for m in makes:
+        if _try_make(m):
+            return m
+    raise MissingToolError("make is either missing or not GNU make")
 
 def help_func(help_str):
     """
