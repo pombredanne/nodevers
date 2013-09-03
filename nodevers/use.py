@@ -27,14 +27,11 @@ def parse(args):
         shared.help_func(__helpstr__)
     else:
         try:
-            optlist, arglist = getopt.getopt(args[1:], "h", ["help"])
+            optlist, arglist = getopt.getopt(args[1:], "")
         except getopt.error:
             err = sys.exc_info()[1]
             sys.stderr.write("Error: %s\n" % str(err))
             sys.exit(-1)
-        for option, value in optlist:
-            if option in ("-h", "--help"):
-                shared.help_func(__helpstr__)
         try:
             shared.link_to(args[0])
         except shared.NoSuchVersionError:

@@ -237,7 +237,7 @@ def link_to(ver):
                 "bin")
         os.symlink(version_bin_dir, get_bin_dir())
     else:
-        raise NoSuchVersionError("there is no such version installed")
+        raise NoSuchVersionError("no such version installed")
 
 def current_version():
     """

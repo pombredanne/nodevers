@@ -30,19 +30,16 @@ def parse(args):
     Parse the arguments and call the correct functions
     based on them.
     """
-    if len(args) == 0:
+    if len(args) == 0 or args[0] in ("-h", "--help"):
         shared.help_func(__helpstr__)
     else:
         try:
-            optlist, arglist = getopt.getopt(args, "h", ["help"])
+            optlist, arglist = getopt.getopt(args[1:],"")
         except getopt.error:
             err = sys.exc_info()[1]
-            sys.stderr.write("Error: %s.\n" % str(err))
+            sys.stderr.write("Error: %s\n" % str(err))
             sys.exit(-1)
-        for option, value in optlist:
-            if option in ("-h", "--help"):
-                shared.help_func(__helpstr__)
         if shared.version_exists(args[0]):
             remove(args[0])
         else:
-            sys.stdout.write("Error: there is no such version installed\n")
+            sys.stdout.write("Error: no such version installed\n")
