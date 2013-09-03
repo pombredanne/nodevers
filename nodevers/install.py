@@ -25,11 +25,8 @@ def install(ver, build_args):
     It also handles exceptions.
     """
     if shared.version_exists(ver):
-        sys.stderr.write("Error: %s is already installed\n" % ver)
+        sys.stderr.write("Error: already installed: %s\n" % ver)
         sys.exit(1)
-    elif not shared.valid_version_string(ver):
-        sys.stderr.write("Error: %s doesn't look like a valid version\n" % ver)
-        sys.exit(2)
     try:
         nodesrc = install_helper.NodeSourceInstaller(ver,
                 shared.get_version_dir(ver), build_args)
@@ -69,15 +66,12 @@ def parse(args):
     else:
         build_args = ""
         try:
-            optlist, arglist = getopt.getopt(args[1:], "h", ["help",
-                "buildargs="])
+            optlist, arglist = getopt.getopt(args[1:], "", ["buildargs="])
         except getopt.error:
             err = sys.exc_info()[1]
             sys.stderr.write("Error: %s\n" % str(err))
             sys.exit(-1)
         for option, value in optlist:
-            if option in ("-h", "--help"):
-                shared.help_func(__helpstr__)
-            elif option in ("--buildargs"):
+            if option in ("--buildargs"):
                 build_args = value
         install(args[0], build_args)

@@ -41,14 +41,10 @@ class NodeSourceInstaller(object):
         self.ver = ver
         self.install_path = install_path
         self.build_args = build_args
+        if not shared.valid_version_string(self.ver):
+            raise shared.NoSuchVersionError("unknown version: %s" % self.ver)
         self.url = "http://nodejs.org/dist/v%s/node-v%s.tar.gz" % (self.ver,
                 self.ver)
-        try:
-            urlopen(self.url)
-        except HTTPError:
-            raise shared.NoSuchVersionError("cannot download node-v%s.tar.gz" % self.ver)
-        except URLError:
-            raise IOError("make sure you are connected to the Internet")
         self.tmpdir = shared.get_tmp_dir()
         try:
             logfile_path = os.path.join(os.path.join(shared.get_nodevers_prefix(), "log"))
@@ -68,9 +64,9 @@ class NodeSourceInstaller(object):
             try:
                 urlretrieve(self.url, self.package)
             except IOError:
-                raise IOError("make sure you are connected to the Internet")
+                raise IOError("cannot download: %s" % self.package)
             except ContentTooShortError:
-                raise IOError("the download was interrupted")
+                raise ContentTooShortError("the download was interrupted")
     def extract(self):
         """
         This method will extract the source files from
@@ -81,7 +77,7 @@ class NodeSourceInstaller(object):
             extract = tarfile.open(self.package, "r|gz")
         except tarfile.ReadError:
             os.remove(self.package)
-            raise IOError("%s is corrupted" % self.package)
+            raise tarfile.ReadError("corrupted package: %s" % self.package)
         extract.extractall()
         extract.close()
         os.chdir("node-v%s" % self.ver)
