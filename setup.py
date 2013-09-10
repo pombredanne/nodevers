@@ -25,7 +25,7 @@ setup(
     license='BSD (3-Clause) License',
     entry_points={
         'console_scripts': [
-            'nodevers = nodevers.__main__:main'
+            'nodevers = nodevers.cli:main'
         ]
     },
     url='https://github.com/keremc/nodevers',
