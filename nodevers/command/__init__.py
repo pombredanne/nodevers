@@ -3,7 +3,7 @@ commands = [
     "remove",
     "use",
     "version",
-    "version",
+    "versions",
     "patch",
     "clean"
     ]
