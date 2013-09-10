@@ -6,19 +6,34 @@ try:
 except ImportError:
     from distutils.core import setup
 
+import sys
+import os
 import nodevers
+
+if sys.argv[-1] == "publish":
+    os.system("python setup.py sdist upload")
+    sys.exit()
+
+requirements = []
+if sys.version_info[:2] < (2, 7):
+    requirements.append("argparse")
 
 setup(
     name='nodevers',
     version=nodevers.__version__,
     packages=['nodevers'],
     license='BSD (3-Clause) License',
-    scripts=['scripts/nodevers'],
+    entry_points={
+        'console_scripts': [
+            'nodevers = nodevers.__main__:main'
+        ]
+    },
     url='https://github.com/keremc/nodevers',
     author='Kerem Çakırer',
     author_email='kcakirer@hotmail.com',
     long_description=open("README").read(),
     description='Node.js version manager',
+    install_requires=requirements,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
