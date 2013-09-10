@@ -27,7 +27,7 @@ To install nodevers, simply run:
 
 ::
 
-        $ pip install nodevers
+    $ pip install nodevers
 
 Or if you have downloaded the zip/cloned from GitHub:
 
