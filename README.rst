@@ -1,4 +1,3 @@
-========
 nodevers
 ========
 
@@ -36,7 +35,7 @@ Or if you have downloaded the zip/cloned from GitHub:
 
     $ python setup.py install
 
-You'll also need to either:
+You'll also need to add either:
 
 * ``~/.nodevers/bin``
 
@@ -47,6 +46,8 @@ or
 or
 
 * ``/opt/nodevers/bin`` if you run nodevers and install Nodes as root
+
+to the ``PATH``.
 
 Usage
 -----
