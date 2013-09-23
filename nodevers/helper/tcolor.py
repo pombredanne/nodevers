@@ -29,6 +29,17 @@ _background_colors = {
 
 
 def color(string, color=None, effects=[], foreground=True):
+    """Add colors to the specified string
+    and/or change its other attributes.
+
+    Keyword arguments:
+        color -- the color the string should be in (default None)
+        effects -- the effects that should be applied to the
+                   the string (default []) (possible "bold",
+                    "underscore", "reverse")
+        foreground -- whether the foreground color should be affected or not
+                      (default True)
+    """
     if foreground:
         colors = _foreground_colors
     else:
