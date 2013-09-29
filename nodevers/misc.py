@@ -5,7 +5,7 @@ import re
 
 from nodevers.helper import color as c
 
-__all__ = ["warn", "error"]
+__all__ = ["warn", "error", "getshell"]
 
 def warn(message):
     """Output a warning message.
