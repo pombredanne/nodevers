@@ -1,19 +1,29 @@
 from __future__ import print_function
 import sys
 
+from nodevers.helper import color as c
+
+__all__ = ["warn", "error"]
 
 def warn(message):
-    """Print the message to stderr."""
+    """Output a warning message.
+
+    Keyword arguments:
+        message -- the message to be printed
+    """
+    message = "%s: %s" % (c("warning", "yellow"), message)
     print(message, file=sys.stderr)
 
 
 def error(message, errno=1):
-    """Print the message to stderr and exit.
+    """Output an error message and exit.
 
     Keyword arguments:
-        errno:      the exit code to be returned
+        message -- the message to be printed
+        errno -- the exit code to be returned
     """
-    warn(message)
+    message = "%s: %s" % (c("error", "red"), message)
+    print(message, file=sys.stderr)
     sys.exit(errno)
 
 
