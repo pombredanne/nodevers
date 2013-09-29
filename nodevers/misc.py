@@ -1,5 +1,7 @@
 from __future__ import print_function
 import sys
+import os
+import re
 
 from nodevers.helper import color as c
 
@@ -25,6 +27,18 @@ def error(message, errno=1):
     message = "%s: %s" % (c("error", "red"), message)
     print(message, file=sys.stderr)
     sys.exit(errno)
+
+
+def getshell():
+    """Return the name of the shell that
+    is used for running Python.
+    """
+    regex = re.compile("([a-z]*)$")
+    shell = regex.search(os.getenv("SHELL"))
+    if not shell:
+        return None
+    else:
+        return shell.group(0)
 
 
 def do_nothing(*args):
